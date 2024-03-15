@@ -2,12 +2,15 @@ import serial
 from datetime import datetime, timedelta
 
 class GPS:
-    def __init__(self, nome, porta, baud, colunas, fuso):
-        self.nome = nome
+    def __init__(self, porta, baud, colunas, fuso):
         self.porta = porta
         self.baud = baud
         self.colunas = colunas
         self.fuso = fuso
+
+    def __str__(self, loc_atual):
+        return f'Lat: {loc_atual[1]} | Long: {loc_atual[2]} | Time: {loc_atual[0]}'
+
 
     def converte_horario(self, time):
         time = datetime.strptime(time, "%H%M%S.%f")
@@ -39,5 +42,7 @@ class GPS:
 
                         hora = self.converte_horario(dados[1])
                         gps = [hora, latitude, longitude, altitude]
+                        print(self.__str__(gps))
+                        
                         #Aqui implementa a questão do firebase/mapa em tempo real
                         
